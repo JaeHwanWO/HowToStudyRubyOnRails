@@ -2,17 +2,15 @@
 
 ## 0. 왜 써야하는가?
 
+이 튜토리얼의 근간이 된 유투브 강좌입니다. 
+
 ```
  https://www.youtube.com/watch?v=wbZ6yrVxScM&t=925s
 ```
 
-`github`, `twitter`
+`github`, `twitter` 가 바로 레일즈로 만들어졌다. 
 
-초보 개발자에게도 좋은 언어이다. 
-
-php, js에 비해서 훨씬 간단하다!
-
-사이드 프로젝트용 미니 서버를 만들기에 매우 좋다고 생각한다. 
+초보 개발자에게도 좋은 언어이다. php, js에 비해서 훨씬 간단하고, 세팅할 부분이 적다. 개인적으로는 사이드 프로젝트용 미니 서버를 만들기에 매우 좋다고 생각한다. (너무 어려운 프로젝트에서는, 오히려 커스터마이징 하기에 복잡할 수 있음.)
  
 ## 1. 작업 환경 세팅하기
 1. 설치
@@ -37,11 +35,8 @@ www.installrails.com
 
 * Create, Read, Update, Delete가 가능한 블로그 포스팅 기능을 만들 예정이다. 
 
-> 앱의 State(상태)를 관리하는 것(특히 여러가지 비동기 구성요소를 공유할 때)은 RxSwift를 통해 배울 수 있는 중요한 포인트 중 하나
-
 ### 2. Bulma - for CSS Design
-* 우리는 프론트 개발을 하려는 것이 아니니, Bulma라는 CSS 라이브러리를 사용할 예정이다. 
-
+* 우리는 프론트 개발을 하려는 것이 아니니, Bulma라는 CSS 라이브러리를 사용할 예정이다. 부트스트랩과 비슷한 역할을 한다고 생각하면 된다. 
 
 ## 3. rails app 만들기
 
@@ -57,14 +52,14 @@ cd demoBlog
 ```
 rails s
 ```
- * 짠 ! You're on Rails가 뜨면 성공적인 세팅이다. 
+ * 짠 ! 127.0.0.1:3000으로 접속했을 때, You're on Rails가 뜨면 성공적인 세팅이다. 
 
 ### gem file 설정
 
 > rubygems.org 에서 잼 파일을 다 만들어준다.
 > 참고하자!
 
-```
+```ruby
 gem 'bulma-rails', '~>0.6.1'
 ```
 * bulma 역시 잼을 통해서 설치해준다. 
@@ -72,22 +67,22 @@ gem 'bulma-rails', '~>0.6.1'
 ` @import "bulma"; ` 를 추가해줘야 한다. 
 * 그 후, `application.css`를 `application.scss`로 rename 한다. 
 
-```
+```ruby
 gem 'simple_form', '~>3.5'
 ```
 
-```
+```ruby
 gem 'guard', '~> 2.14', '>=2.14.1'
 ```
 * guard는 오직 development에서만 필요하다. group :development라고 써있는 곳 안쪽에 넣어주면 된다. 
 
-```
+```ruby
 gem 'guard-livereload', '~> 2.5', '>= 2.5.2'
 ```
 
 * guard와 마찬가지로 developement 안에 넣어준다. 
 
-```
+```ruby
 # Make erros better looking
 gem 'better_errors', '~>2.4'
 ```
@@ -129,16 +124,18 @@ rails g controller posts
 * controllers안에 `posts_controller.rb`가 있는 걸 확인할 수 있다. 
 	* `posts_controller.rb` 안에 다음과 같은 함수를 추가해준다. 
 
-	* ``` 
+```ruby
 		 def index
 		 
- 		 end 
- 	* ```
-
-* posts안에 `index.html.erb`라는 파일을 직접 추가해준다. 
-
-
+ 		 end
 ```
+
+index라는 함수를 추가해주고, 내용은 아직 채우지 않은 것이다. 
+
+* views > posts 안에 `index.html.erb`라는 파일을 직접 추가해준다. 
+
+
+```html
 <h1 class = "title"> Blog Index </h1>
 ```
 * 을 추가해준다. 
@@ -147,20 +144,22 @@ rails g controller posts
 * 하지만, localhost:3000/posts로 이동하면 No route matches "/posts"라는 경고를 보게 된다.
 * route를 추가해 줄 차례이다. 
 
-```
-
-`routes.rb` 파일에 
+config 폴더 안에 있는 `routes.rb` 파일에 
 
 ```
 resources :posts
+
 root "posts#index"
 
 ```
 * 라고 써 준다. 
-* localhost:3000/posts/는 잘 작동하는 것을 확인할 수 있다. 
+* 기본적으로 posts에 접근하게 해주는데, (아마 모델 얘기인듯)
+* root로 들어왔을 때는 postController안에 있는 index 함수를 실행하라는 뜻이다. 
+* localhost:3000/는 잘 작동하는 것을 확인할 수 있다. 
 
- `PostsController`에 def new end 와, def create end 를 추가해준다. 
+ `PostsController`에 def new end 와, def create end 를 추가해준다. 아까와 마찬가지로 함수 내용은 채우지 않는다. 
  
+
 ### model 생성
  
 이제 model을 추가할 차례이다. 
@@ -169,7 +168,6 @@ root "posts#index"
 rails g model Post title:string content:text
 ```
 * title과 content의 타입을 정해준 모델을 생성했다. 
-* Migration을 자동으로 해준다. 
 * 원한다면 마이그레이션 파일을 변경할 수 있다: db폴더 안에 migration file이 있다. 
 
 ```
@@ -180,24 +178,28 @@ rails db:migrate
 
 ### controller 함수들 채우기
 
-```
+```ruby
 def new
 	@post = Post.new
 end
 ```
 * Post.new가 model에서 새로운 객체를 만들어준다. 
 
+* @가 붙은 변수는, 인스턴스 안에 있는 변수이다. controller 안에서 쓸 변수를 선언해준거라고 생각하면 된다.
+* 참고로 루비는 선언 할 때 let이나 var같은 타입도 지정하지 않는다. * @post라고 쓰는 것 자체가 선언이다.  
 
 routing에 대해서 헷깔린다면?.?
 
-
+터미널에 
 ```
 rake routes
 ```
 를 치면 다 나온다!
 
 
-```
+* controller에 있는 함수를 더 채워준다. 
+
+```ruby
 def create
    @post = Post.new(post_params)
    if @post.save
@@ -209,19 +211,24 @@ end
 
 ```
 
-```
+* create 함수는, post_params를 실행해서, 그 result를 매개변수로 해서 new를 실행시킨다. 
+* 만약 post가 save라면?(정확한 의미 모르겠음) post로 redirect 시키고, 
+* 아니면 new 뷰를 렌더링 해준다. 
+
+```ruby
 private
 
 def post_params
 	params.require(:post).permit(:title, :content)
 end
 ```
+* private으로 선언된 post_params 함수는, post 객체의 permission을 받아온다. title과 content에 대해서 받아왔다. 
 
 ### view 작성해주기
 views > posts 안에 
 ` new.html.erb` 파일을 만들어준다. 
 
-```
+```html
 <h1 class = "title"> New Posts </h1>
 
 ```
@@ -230,7 +237,7 @@ views > posts 안에
 
 * 잘 돌아가는것이 확인되었으면, 다음과 같은 내용을 덧붙인다. 
 
-```
+```erb
 <h1 class = "title"> New Posts </h1>
 
 <div class="section">
@@ -250,18 +257,23 @@ views > posts 안에
   <% end %>
 </div>
 ```
-
+* erb가 어렵다면 ?? html을 erb로 바꿔주는 사이트들이 여러개 있다. 참고해보자. 
+* <%= => <% end %> 가 루비 문법을 html에서 쓰려고, 표시하는 부분이다. 
+* 한줄로 쓰고 싶다면 <%= %> 을 쓰자. 
 
 ### controller 작성해주기.
 
 controller에 다음과 같은 함수를 추가한다. 
 
-```
+```ruby
 def show
    @post = Post.find(params[:id])
 end
 
 ```
+
+* show함수는, param으로 받은 id를 써서, post db를 뒤져서 id와 일치하는? 포스트를 찾아서 갖고 오는 애이다. 
+* 이 params가 어떻게 넘어왔는지는 뒤쪽에 나온다. 
 
 ### view 작성해주기
 
@@ -281,6 +293,8 @@ end
 </div>
 ```
 
+* show는 말그대로 포스팅을 보여준다. 
+
 ### controller 작성해주기
 
 ```
@@ -288,6 +302,8 @@ def index
     @posts = Post.all.order("created_at DESC")
 end
 ```
+
+* index 함수를 수정한다. 모든 포스팅을 보여주는 기능으로 변경되었다!
 
 ### view 작성해주기
 
@@ -329,7 +345,7 @@ end
 ### layout code 복붙하기
 
 
-```
+```html
 <section class="hero is-primary is-medium">
 	  <!-- Hero head: will stick at the top -->
 	  <div class="hero-head">
@@ -365,6 +381,15 @@ end
 
 
 * 이 코드를 복붙해왔는데, bulma에 가면 다양한 snippet들이 있다. 원하는 걸 쓰면 될 듯 하다. 
+
+
+> 여기부터 영상의 1시간 부분이다. 영상 링크에는 깃헙 링크도 있더라...
+
+### edit과 post 
+
+* edit과 post 기능을 추가해보자!
+* edit을 하기 위해서는 두개의 action이 있어야한다. 
+* 하나는 update, 하나는 edit.
 
 
 
