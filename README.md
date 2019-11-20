@@ -67,29 +67,32 @@ gem 'bulma-rails', '~>0.6.1'
 ` @import "bulma"; ` 를 추가해줘야 한다. 
 * 그 후, `application.css`를 `application.scss`로 rename 한다. 
 
-```ruby
-gem 'simple_form', '~>3.5'
+```
+gem 'simple_form', '~> 5.0', '>= 5.0.1'
 ```
 
-```ruby
-gem 'guard', '~> 2.14', '>=2.14.1'
+* 굳이 서버를 껐다 켜지 않아도 변경사항이 반영되도록 live-reload 기능을 추가해준다. 
+```
+gem 'guard', '~> 2.16', '>= 2.16.1'
 ```
 * guard는 오직 development에서만 필요하다. group :development라고 써있는 곳 안쪽에 넣어주면 된다. 
 
-```ruby
-gem 'guard-livereload', '~> 2.5', '>= 2.5.2'
+```
+gem 'guard-livereload', '~> 2.5', require: false
 ```
 
 * guard와 마찬가지로 developement 안에 넣어준다. 
 
 ```ruby
 # Make erros better looking
+```
+# Make errors better looking
 gem 'better_errors', '~>2.4'
 ```
 * better_errors 역시 development에 넣어준다. 
 
 
-버전은 문서를 쓰는 시점과 많이 다를 수 있으니, 꼭 rubygems에서 확인하길 바란다.
+버전은 문서를 쓰는 시점(2019-11-20)과 많이 다를 수 있으니, 꼭 rubygems에서 확인하길 바란다.
 
 
 ### install
@@ -98,7 +101,6 @@ gem 'better_errors', '~>2.4'
 bundle
 ```
 * 추가한 gem들이 설치되었다!
-
 
 * 서버를 열고, 다른 커멘드 탭에서 다음과 같은 작업을 계속한다. 
 
