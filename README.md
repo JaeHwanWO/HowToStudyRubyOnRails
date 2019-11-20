@@ -381,6 +381,14 @@ end
 
 
 * 이 코드를 복붙해왔는데, bulma에 가면 다양한 snippet들이 있다. 원하는 걸 쓰면 될 듯 하다. 
+* link_to가 핵심 포인트이다. 
+* <%= link_to "Create New Post", new_post_path, class:"navbar-item" %>
+* new_post_path로 가게 하는데,,,,posts controller의 new 함수를 실행 시키는 것 같다. 매우 중요한듯!
+
+
+* <%= link_to 'Demo Blog', root_path, class: "navbar-item" %>
+* 얘도 마찬가지로 root_path로 가게 한다. 
+
 
 
 > 여기부터 영상의 1시간 부분이다. 영상 링크에는 깃헙 링크도 있더라...
